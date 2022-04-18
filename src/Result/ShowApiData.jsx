@@ -2,6 +2,7 @@ import {CheckBucket} from "../Helper/Helper";
 import {QuantityItem} from "../Helper/Helper";
 import {DataFromState} from "../Context/StateContext";
 import {useContext} from "react";
+import {Link} from "react-router-dom";
 
 const ShowApiData = ({ApiData}) => {
 
@@ -38,6 +39,8 @@ const ShowApiData = ({ApiData}) => {
 
                 {QuantityItem(state , id) > 1 && <button onClick={()=> dispatch({type : 'DecreaseCounter' , payload : ApiData})}>-</button>}
                 {QuantityItem(state , id) === 1 && <button onClick={()=> dispatch({type : 'RemoveToShopCard' , payload : ApiData})}>Remove to Card</button>}
+
+                <Link to={`/details/${id}`}>See Details</Link>
 
             </div>
         </div>

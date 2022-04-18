@@ -1,17 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import {BrowserRouter} from "react-router-dom";
+import StateContext from "./Context/StateContext";
 import ApiContext from "./Context/ApiContext";
-import {StateContext} from "./Context/StateContext";
-
 
 ReactDOM.render(
-    <React.StrictMode>
-        <ApiContext>
-            <StateContext>
+    <BrowserRouter>
+        <StateContext>
+            <ApiContext>
                 <App />
-            </StateContext>
-        </ApiContext>
-    </React.StrictMode>,
+            </ApiContext>
+        </StateContext>
+    </BrowserRouter>,
+
     document.getElementById('root')
 );

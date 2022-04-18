@@ -18,6 +18,7 @@ const QuantityHandel = (state) =>
 
 const reducer = (state , {type , payload}) =>
 {
+    console.log(state)
     switch (type)
     {
         case 'AddToShopCard' :
@@ -58,13 +59,28 @@ const reducer = (state , {type , payload}) =>
                 ...QuantityHandel(state)
             }
 
+        case "Checkout" :
+            return {
+                selectedItems: [],
+                itemsCounter: 0,
+                total: 0,
+                checkout: true
+            }
+        case "Clear":
+            return {
+                selectedItems: [],
+                itemsCounter: 0,
+                total: 0,
+                checkout: false
+            }
+
         default :
             return state
     }
 }
 
 
-export const StateContext = ({children}) =>
+const StateContext = ({children}) =>
 {
     const [state , dispatch] = useReducer( reducer , initialState)
 
@@ -75,5 +91,6 @@ export const StateContext = ({children}) =>
     )
 }
 
+export default StateContext
 export const DataFromState = createContext()
 

@@ -1,19 +1,24 @@
 import RenderApiData from "./Result/RenderApiData";
-import {useContext} from "react";
-import {DataFromState} from "./Context/StateContext";
 import Header from "./Header/Header";
+import ShowApiDetails from "./Result/ShowApiDetails";
+import NotFound from "./Result/NotFound";
+import { Routes, Route } from "react-router-dom";
+import ApiContext from "./Context/ApiContext";
+import StateContext from "./Context/StateContext";
 
 function App() {
 
-    const {state , dispatch} = useContext(DataFromState)
-
-    console.log(state)
 
 
     return (
         <>
-            <Header/>
-            <RenderApiData/>
+
+                    <Header/>
+                    <Routes>
+                        <Route path='/' exact element={<RenderApiData/>}/>
+                        <Route path='/details/:id' element={<ShowApiDetails/>}/>
+                        <Route path='*' element={<NotFound/>}/>
+                    </Routes>
         </>
     )
 
