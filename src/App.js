@@ -1,6 +1,7 @@
 import RenderApiData from "./Result/RenderApiData";
 import {useContext} from "react";
 import {DataFromState} from "./Context/StateContext";
+import Header from "./Header/Header";
 
 function App() {
 
@@ -9,11 +10,12 @@ function App() {
     console.log(state)
 
 
-  return (
-      <>
-      <RenderApiData/>
-      </>
-  )
+    return (
+        <>
+            <Header/>
+            <RenderApiData/>
+        </>
+    )
 
 }
 

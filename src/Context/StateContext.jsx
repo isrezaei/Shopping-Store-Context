@@ -8,6 +8,14 @@ const initialState = {
     checkout : false
 }
 
+const QuantityHandel = (state) =>
+{
+    const counter = state.shopCard.reduce((prams , items) => prams + items.quantity , 0)
+    const price = state.shopCard.reduce((prams , items)=> prams + items.quantity * items.price , 0)
+
+    return {counter , price}
+}
+
 const reducer = (state , {type , payload}) =>
 {
     switch (type)
@@ -24,26 +32,30 @@ const reducer = (state , {type , payload}) =>
             return  {
                 ...state,
                 shopCard : [...state.shopCard],
+                ...QuantityHandel(state)
             }
         case 'RemoveToShopCard':
             const RemoveItems = state.shopCard.filter(items => items.id !== payload.id)
             return {
                 ...state,
-                shopCard: [...RemoveItems]
+                shopCard: [...RemoveItems],
+                ...QuantityHandel(state)
             }
         case 'IncreaseCounter' :
             const IncreaseIndex = state.shopCard.findIndex(items => items.id === payload.id)
             state.shopCard[IncreaseIndex].quantity++
 
             return {
-                ...state
+                ...state,
+                ...QuantityHandel(state)
             }
         case 'DecreaseCounter' :
             const DecreaseIndex =  state.shopCard.findIndex(items => items.id === payload.id)
             state.shopCard[DecreaseIndex].quantity--
 
             return {
-                ...state
+                ...state,
+                ...QuantityHandel(state)
             }
 
         default :
