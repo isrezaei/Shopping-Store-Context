@@ -17,7 +17,6 @@ const ApiContext = ({children}) => {
 
     } , [])
 
-    console.log(SaveApiData)
 
     return (
 
