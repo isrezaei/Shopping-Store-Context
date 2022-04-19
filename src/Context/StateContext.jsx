@@ -5,7 +5,7 @@ const initialState = {
     shopCard : [],
     counter : 0,
     total : 0,
-    checkout : false
+    checkout : false,
 }
 
 const QuantityHandel = (state) =>
@@ -19,8 +19,6 @@ const QuantityHandel = (state) =>
 
 const reducer = (state , {type , payload}) =>
 {
-    console.log(state)
-
     switch (type)
     {
         case 'AddToShopCard' :
@@ -35,7 +33,8 @@ const reducer = (state , {type , payload}) =>
             return  {
                 ...state,
                 shopCard : [...state.shopCard],
-                ...QuantityHandel(state.shopCard)
+                ...QuantityHandel(state.shopCard),
+                checkout : false,
             }
         case 'RemoveToShopCard':
             const RemoveItems = state.shopCard.filter(items => items.id !== payload.id)
@@ -63,17 +62,17 @@ const reducer = (state , {type , payload}) =>
 
         case "Checkout" :
             return {
-                selectedItems: [],
-                itemsCounter: 0,
-                total: 0,
-                checkout: true
+                shopCard : [],
+                counter : 0,
+                total : 0,
+                checkout : true,
             }
         case "Clear":
             return {
-                selectedItems: [],
-                itemsCounter: 0,
-                total: 0,
-                checkout: false
+                shopCard : [],
+                counter : 0,
+                total : 0,
+                checkout : false,
             }
 
         default :

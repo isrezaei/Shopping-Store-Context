@@ -26,8 +26,9 @@ const ShowApiData = ({ApiData}) => {
             <p>{category}</p>
 
             <div style={{
+                width : '70%',
                 display : "flex",
-                justifyContent : 'center',
+                justifyContent : 'space-between',
                 alignItems : 'center'
             }}>
 
@@ -36,6 +37,8 @@ const ShowApiData = ({ApiData}) => {
                         <button onClick={()=> dispatch({type : 'IncreaseCounter' , payload : ApiData})}> + </button> :
                         <button onClick={()=> dispatch({type : 'AddToShopCard' , payload : ApiData})}>Add to Card</button>
                 }
+
+                <h2>{QuantityItem(state , id)}</h2>
 
                 {QuantityItem(state , id) > 1 && <button onClick={()=> dispatch({type : 'DecreaseCounter' , payload : ApiData})}>-</button>}
                 {QuantityItem(state , id) === 1 && <button onClick={()=> dispatch({type : 'RemoveToShopCard' , payload : ApiData})}>Remove to Card</button>}

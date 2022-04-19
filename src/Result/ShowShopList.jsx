@@ -20,17 +20,6 @@ const ShowShopList = ({ShopCard}) => {
 
             <div style={{
                 width : '90%' ,
-                display : 'flex',
-                justifyContent : 'space-around',
-                alignItems : 'center'
-            }}>
-                <h1>Total Items : {state.counter} </h1>
-                <h1>Total Payments : {state.total} $</h1>
-            </div>
-
-
-            <div style={{
-                width : '90%' ,
                 display : "flex",
                 justifyContent : 'space-evenly',
                 alignItems : 'center',
