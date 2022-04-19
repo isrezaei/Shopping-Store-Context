@@ -10,7 +10,7 @@ const ApiContext = ({children}) => {
 
         const AsyncFetchData = async () =>
         {
-            SetApiData(await FetchData())
+            return SetApiData((await FetchData.get(`/products`)).data)
         }
 
         AsyncFetchData()

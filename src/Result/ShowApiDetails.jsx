@@ -1,19 +1,27 @@
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import {useParams} from "react-router-dom";
-import {DataFromApi} from "../Context/ApiContext";
 import {DataFromState} from "../Context/StateContext";
 import {CheckBucket, QuantityItem} from "../Helper/Helper";
+import {useEffect} from "react";
+import {FetchData} from "../ServerApi/Api";
 
 const ShowApiDetails = () => {
 
     const params = useParams()
     const {state , dispatch} = useContext(DataFromState)
+    const [SaveApiDetails , SetApiDetails] = useState({})
 
-    const ApiData = useContext(DataFromApi)
 
-    const FixIndex = params.id - 1
+    useEffect(() => {
+        const AsyncFetchData = async () =>
+        {
+            return SetApiDetails((await FetchData.get(`/products/${params.id}`)).data)
+        }
+        AsyncFetchData()
+    } , [params.id])
 
-    const {category , description , image , price , title , id} = ApiData[FixIndex]
+
+    const {category , description , image , price , title , id} = SaveApiDetails
 
     return (
         <div style={{
@@ -35,19 +43,16 @@ const ShowApiDetails = () => {
                 justifyContent : 'space-evenly',
                 alignItems : 'center'
             }}>
-
-
                 {
                     CheckBucket(state , id) ?
-                        <button onClick={()=> dispatch({type : 'IncreaseCounter' , payload : ApiData[FixIndex]})}> + </button> :
-                        <button onClick={()=> dispatch({type : 'AddToShopCard' , payload : ApiData[FixIndex]})}>Add to Card</button>
+                        <button onClick={()=> dispatch({type : 'IncreaseCounter' , payload : SaveApiDetails})}> + </button> :
+                        <button onClick={()=> dispatch({type : 'AddToShopCard' , payload : SaveApiDetails})}>Add to Card</button>
                 }
 
                 <h2>{QuantityItem(state , id)}</h2>
 
-                {QuantityItem(state , id) > 1 && <button onClick={()=> dispatch({type : 'DecreaseCounter' , payload : ApiData[FixIndex]})}>-</button>}
-                {QuantityItem(state , id) === 1 && <button onClick={()=> dispatch({type : 'RemoveToShopCard' , payload : ApiData[FixIndex]})}>Remove to Card</button>}
-
+                {QuantityItem(state , id) > 1 && <button onClick={()=> dispatch({type : 'DecreaseCounter' , payload : SaveApiDetails})}>-</button>}
+                {QuantityItem(state , id) === 1 && <button onClick={()=> dispatch({type : 'RemoveToShopCard' , payload : SaveApiDetails})}>Remove to Card</button>}
 
             </div>
         </div>
