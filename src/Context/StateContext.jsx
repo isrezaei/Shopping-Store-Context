@@ -4,21 +4,23 @@ const initialState = {
 
     shopCard : [],
     counter : 0,
-    price : 0,
+    total : 0,
     checkout : false
 }
 
 const QuantityHandel = (state) =>
 {
-    const counter = state.shopCard.reduce((prams , items) => prams + items.quantity , 0)
-    const price = state.shopCard.reduce((prams , items)=> prams + items.quantity * items.price , 0)
+    const counter = state.reduce((prams , items) => prams + items.quantity , 0)
+    const total = state.reduce((prams , items)=> prams + items.quantity * items.price , 0).toFixed(2)
 
-    return {counter , price}
+
+    return {counter , total}
 }
 
 const reducer = (state , {type , payload}) =>
 {
     console.log(state)
+
     switch (type)
     {
         case 'AddToShopCard' :
@@ -33,14 +35,14 @@ const reducer = (state , {type , payload}) =>
             return  {
                 ...state,
                 shopCard : [...state.shopCard],
-                ...QuantityHandel(state)
+                ...QuantityHandel(state.shopCard)
             }
         case 'RemoveToShopCard':
             const RemoveItems = state.shopCard.filter(items => items.id !== payload.id)
             return {
                 ...state,
                 shopCard: [...RemoveItems],
-                ...QuantityHandel(state)
+                ...QuantityHandel(RemoveItems)
             }
         case 'IncreaseCounter' :
             const IncreaseIndex = state.shopCard.findIndex(items => items.id === payload.id)
@@ -48,7 +50,7 @@ const reducer = (state , {type , payload}) =>
 
             return {
                 ...state,
-                ...QuantityHandel(state)
+                ...QuantityHandel(state.shopCard)
             }
         case 'DecreaseCounter' :
             const DecreaseIndex =  state.shopCard.findIndex(items => items.id === payload.id)
@@ -56,7 +58,7 @@ const reducer = (state , {type , payload}) =>
 
             return {
                 ...state,
-                ...QuantityHandel(state)
+                ...QuantityHandel(state.shopCard)
             }
 
         case "Checkout" :
